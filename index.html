@@ -29,11 +29,22 @@
 							<div>
 								Amount of tensors: <b id="tensorsCounter"></b>
 							</div>
-							<div>
-								Weight value: <b id="weightValue"></b>
+							<div id="tensorContainers">
+
+							</div>
+							<div class="input-group mb-3">
+								<div>
+									<input type="text" class="form-control" placeholder="Polynomial degree" id="degreeInput" value="3">
+								</div>
+								<div>
+									<input type="text" class="form-control" placeholder="Learning rate" id="learningRateInput" value="0.2">
+								</div>
 							</div>
 							<div>
-								Bias value: <b id="biasValue"></b>
+								<button type="button" class="btn btn-dark" onclick="resetModel()"> Retrain model </button>
+							</div>
+							<div>
+								<button type="button" class="btn btn-dark" onclick="clearData()"> Clear data </button>
 							</div>
 					</div>
 		</div>
