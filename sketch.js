@@ -8,9 +8,13 @@ let weight_data;
 const learningRate = 0.5
 const optimizer = tf.train.sgd(learningRate)
 
+let tensorCounter;
+let weightValue;
+let biasValue;
 
 function setup() {
-  createCanvas(800, 600);
+  canvas = createCanvas(800, 600);
+  canvas.parent('sketch-holder');
 
   bias = tf.scalar(random(1)).variable();
   weight = tf.scalar(random(1)).variable();
@@ -18,6 +22,9 @@ function setup() {
   bias_data = bias.dataSync()[0]
   weight_data = weight.dataSync()[0]
 
+  tensorCounter = document.getElementById('tensorsCounter');
+  weightValue = document.getElementById('weightValue');
+  biasValue = document.getElementById('biasValue');
 }
 
 // Train the model.
@@ -71,12 +78,8 @@ function draw() {
     weight_data = weight.dataSync()[0];
     bias_data = bias.dataSync()[0];
   }
-
-  console.log(tf.memory().numTensors);
-  console.log(weight.dataSync()[0]);
-  console.log(bias.dataSync()[0])
   drawGradient();
-
+  displayInformation();
 }
 
 function slope(x) {
@@ -96,4 +99,9 @@ function drawGradient() {
 
   stroke(255);
   line(denormX1, denormY1, denormX2, denormY2);
+}
+function displayInformation(){
+  tensorCounter.innerHTML = tf.memory().numTensors;
+  weightValue.innerHTML = weight.dataSync()[0];
+  biasValue.innerHTML = bias.dataSync()[0];
 }
