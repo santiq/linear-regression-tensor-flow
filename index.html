@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>Linear Regression</title>
+	<title>Polinomial Regression</title>
 
 	
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -33,18 +33,24 @@
 
 							</div>
 							<div class="input-group mb-3">
-								<div>
-									<input type="text" class="form-control" placeholder="Polynomial degree" id="degreeInput" value="3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-sizing-sm">Polinomial Degree</span>
 								</div>
-								<div>
-									<input type="text" class="form-control" placeholder="Learning rate" id="learningRateInput" value="0.2">
+									<input type="text" class="form-control" id="degreeInput" value="3">
+							</div>
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="inputGroup-sizing-sm">Learning Rate</span>
 								</div>
+								<input type="text" class="form-control" id="learningRateInput" value="0.2">
 							</div>
-							<div>
-								<button type="button" class="btn btn-dark" onclick="resetModel()"> Retrain model </button>
-							</div>
-							<div>
-								<button type="button" class="btn btn-dark" onclick="clearData()"> Clear data </button>
+							<div class="row">
+								<div class="col-md">
+									<button type="button" class="btn btn-dark" onclick="resetModel()"> Retrain model </button>
+								</div>
+								<div class="col-md">
+									<button type="button" class="btn btn-dark" onclick="clearData()"> Clear data </button>
+								</div>
 							</div>
 					</div>
 		</div>

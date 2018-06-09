@@ -27,39 +27,6 @@ function bindHTML() {
   degreeInput = document.getElementById('degreeInput')  
 }
 
-function initCoeficients() {
-  for(let i = 0; i<degree; i++) {
-    coefficients.push(tf.variable(tf.scalar(random(1)), true))
-  }
-}
-
-// Train the model.
-function train() {
-  tf.tidy(() => {
-    optimizer.minimize(() =>  {
-      const labels = tf.tensor1d(y_vals);
-      return loss(labels, predict(x_vals))
-    }, true, coefficients);
-  })
-}
-
-function predict(x) {
-  const xs = tf.tensor1d(x);
-  let ys = tf.variable(tf.zerosLike(xs));
-  for (let i = 0; i < degree; i++) {
-    const coef = coefficients[i];
-    const pow_ts = tf.fill(xs.shape, degree - i);
-    const sum = tf.add(ys, coefficients[i].mul(xs.pow(pow_ts)));
-    ys.dispose();
-    ys = sum.clone();
-  }
-  return ys;
-}
-
-function loss(labels, prediction) {
-  return labels.sub(prediction).square().mean();
-}
-
 function addPoints() {
   let x = map(mouseX, 0, width, -1, 1);
   let y = map(mouseY, 0, height, -1, 1);
@@ -113,11 +80,9 @@ function displayInformation(){
   tensorCounter.innerHTML = tf.memory().numTensors;
   tensorContainers.innerHTML = '';
   for(let i = 0; i<degree; i++) {
-    tensorContainers.append(` 
-
-      Tensor: ${i} value:  ${coefficients[i].dataSync()[0]}
-
-  `)
+    let t = document.createElement("div")
+    t.innerHTML = `Tensor: ${i} value:  ${coefficients[i].dataSync()[0]}`
+    tensorContainers.append(t)
   }
 }
 
@@ -131,3 +96,40 @@ function clearData(){
   x_vals = [];
   y_vals = [];
 }
+
+/**
+ * Polinomial regression related code.
+ */
+function initCoeficients() {
+  for(let i = 0; i<degree; i++) {
+    coefficients.push(tf.variable(tf.scalar(random(1)), true))
+  }
+}
+
+// Train the model.
+function train() {
+  tf.tidy(() => {
+    optimizer.minimize(() =>  {
+      const labels = tf.tensor1d(y_vals);
+      return loss(labels, predict(x_vals))
+    }, true, coefficients);
+  })
+}
+
+function predict(x) {
+  const xs = tf.tensor1d(x);
+  let ys = tf.variable(tf.zerosLike(xs));
+  for (let i = 0; i < degree; i++) {
+    const coef = coefficients[i];
+    const pow_ts = tf.fill(xs.shape, degree - i);
+    const sum = tf.add(ys, coefficients[i].mul(xs.pow(pow_ts)));
+    ys.dispose();
+    ys = sum.clone();
+  }
+  return ys;
+}
+
+function loss(labels, prediction) {
+  return labels.sub(prediction).square().mean();
+}
+
